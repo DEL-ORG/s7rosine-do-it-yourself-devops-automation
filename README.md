@@ -1,1 +1,1 @@
-# Eric-DoItYourself-Rosine
+# Eric-do-it-yourself

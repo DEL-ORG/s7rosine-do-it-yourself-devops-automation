@@ -1,20 +1,20 @@
 pipeline {
-    agent any
+    agent { label 'deploy' }
 
     stages {
-        stage('clean up env') {
+        stage('Fetching update') {
             steps {
                 sh '''
-                cd ~/automation s7rosine-do-it-yourself-devops-automation
-                docker-compose down --remove-orphans
+                rm -rf ~/deployment/s7rosine-do-it-yourself-devops-automation || true
+                git clone git@github.com:DEL-ORG/s7rosine-do-it-yourself-devops-automation.git ~/deployment
                 '''
             }
         }
 
-        stage('pull image') {
+        stage('Pull image') {
             steps {
                 sh '''
-                cd ~/automation s7rosine-do-it-yourself-devops-automation
+                cd ~/deployment
                 docker-compose pull
                 '''
             }
@@ -23,25 +23,19 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                cd ~/automation s7rosine-do-it-yourself-devops-automation
+                cd ~/deployment
                 docker-compose up -d --remove-orphans
                 '''
             }
         }
-    }
-}        stage('Deploy') {
+
+        stage('List containers') {
             steps {
                 sh '''
-                cd ~/automation s7rosine-do-it-yourself-devops-automation
-                docker-compose up -d --remove-orphans
-                '''
-            }
-        }
-}        stage('list containers') {
-            steps {
-                sh '''
-                cd ~/automation s7rosine-do-it-yourself-devops-automation
+                cd ~/deployment
                 docker-compose ps
                 '''
             }
         }
+    }
+}

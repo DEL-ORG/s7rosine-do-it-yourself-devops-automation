@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sh '''
                 rm -rf s7rosine-do-it-yourself-devops-automation || true
-                
+                rm -rf /home/automation/deployment || true
                 git clone git@github.com:DEL-ORG/s7rosine-do-it-yourself-devops-automation.git ~/deployment
                 '''
             }

@@ -5,7 +5,7 @@ pipeline {
         stage('Fetching update') {
             steps {
                 sh '''
-                rm -rf ~/deployment/s7rosine-do-it-yourself-devops-automation || true
+                rm -rf s7rosine-do-it-yourself-devops-automation || true
                 git clone git@github.com:DEL-ORG/s7rosine-do-it-yourself-devops-automation.git ~/deployment
                 '''
             }
